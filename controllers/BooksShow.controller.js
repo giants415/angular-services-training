@@ -64,21 +64,14 @@ function BooksShowController($routeParams,    $location,   $http, BookService) {
 
   function deleteBook(book) {
       console.log('deleting book: ', book);
-
-    /*************************************
-      REMOVE $http here -
-      make use of the service instead
-      BookService.remove(id).then()
-    **************************************/
-
-      $http({
-        method: 'DELETE',
-        url: 'https://super-crud.herokuapp.com/books/' + book._id,
-      }).then(onBookDeleteSuccess);
+      BookService.remove(book).then(onBookDeleteSuccess, onError);
 
       function onBookDeleteSuccess(response){
         console.log('book delete response data:', response.data);
         $location.path('/');
+      }
+      function onError() {
+        console.log("error updating the book");
       }
     }
 }
