@@ -135,22 +135,13 @@ function BookService($http, $q) {
 
   function remove(book) {
     console.log('deleting book: ', book);
+    var def = $q.defer();
 
-
-
-    /*
-      CREATE A NEW deferred here
-    */
-
-    /*
-      TRIGGER $http REQUEST HERE
-      ATTACH THE FUNCTIONS BELOW TO HANDLE SUCCESS AND ERROR
-    */
-
-
-    /*
-      RETURN THE DEFERRED'S promise
-    */
+    $http({
+      method: 'DELETE',
+      url: 'https://super-crud.herokuapp.com/books/'+bookId
+    }).then(onBookDeleteSuccess, onError);
+      return def.promise;
 
 
 
@@ -161,12 +152,6 @@ function BookService($http, $q) {
     function onBookDeleteSuccess(response){
       console.log('book delete response data:', response.data, this);
       self.book = {};
-      /*
-        RESOLVE THE DEFERRED
-        PASS THE BOOK DOWN THE CHAIN (It's an empty object now)
-      */
-
-
     }
 
     function onError(error) {
